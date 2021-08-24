@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true"
+    tools:context=".Activity.MainActivity"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/error_color_material_light"
+        android:fontFamily="casual"
+        android:text="Nearby BEACHES"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_gravity="center"
+        android:id="@+id/main_LAY_map"
+        android:layout_width="366dp"
+        android:layout_height="14dp"
+        android:layout_margin="24dp"
+        android:layout_weight="1"
+        android:background="#45454545" />
+
+
+
+</LinearLayout>
