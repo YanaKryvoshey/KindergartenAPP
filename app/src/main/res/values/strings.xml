@@ -2,4 +2,128 @@
     <string name="app_name">My Application</string>
     <string name="api_key">AIzaSyDBPfMDN1CGaF5OaA8O83ADn7dUsHkHB4Q</string>
     <string name="api_key_map">AIzaSyDBPfMDN1CGaF5OaA8O83ADn7dUsHkHB4Q</string>
+    <!--Error messages-->
+    <string name="please_enter_item_name">Please enter item name</string>
+    <string name="please_enter_item_decription">Please enter item description</string>
+    <string name="user_name">User name</string>
+    <string name="user_city">User city</string>
+    <string name="user_phone">User phone</string>
+    <string name="user_mail">User mail</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="welcome_to_do_good">Welcome To Do good!</string>
+    <string name="welcome">Welcome!</string>
+    <string name="do_good_and_fell_good">Do good and feel good!</string>
+    <string name="mail">Mail</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="sign_in_with">Sign in with:</string>
+    <string name="not_a_member">Not a member ?</string>
+    <string name="first_and_last_name">Name</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone</string>
+    <string name="your_city">City</string>
+    <string name="cancel"><b>Cancel</b></string>
+    <string name="subscribe"><b>Subscribe</b></string>
+
+    <!--Input problem messages-->
+    <string name="enter_name_error">"Please enter a name"</string>
+    <string name="enter_email_error">"Please enter a valid email address"</string>
+    <string name="enter_city_error">Please enter a city name</string>
+    <string name="enter_phone_error">Please enter a phone number</string>
+    <string name="six_chars_password_error">Please enter at least 6 characters</string>
+    <string name="null_password">Please enter a password</string>
+    <string name="confirm_password">Please confirm password</string>
+    <string name="password_no_match">Passwords does not match!</string>
+
+    <string name="facebook_app_id" translatable="false">3225663444226147</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb3225663444226147</string>
+    <string name="update_account">Update account</string>
+    <string name="please_update">Please update</string>
+    <string name="size">0.94</string>
+    <string name="update_profile">Update profile</string>
+    <string name="show_ask_item">Show ask item</string>
+    <string name="show_give_item">Show give item</string>
+
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
+
+    <string name="condition">Condition: </string>
+    <string name="post_date">Post date: </string>
+    <string name="price">Price: </string>
+    <string name="description">Description: </string>
+
+    <string name="remove_item">Remove item</string>
+    <string name="edit_item">Edit item</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_sure">Are you sure you want to delete</string>
+
+    <string name="contact_us">Contact us at:</string>
+    <string name="our_email" translatable="false">dogoodapp1@gmail.com</string>
+
+    <string name="regarding_item">Regarding item:</string>
+    <string name="ils">ILS</string>
+
+    <string name="name2">Name: </string>
+    <string name="email2">Email: </string>
+    <string name="phone2">Phone: </string>
+    <string name="city2">City: </string>
+
+    <string name="contact_giver">Contact Giver</string>
+    <string name="contact_asker">Contact Asker</string>
+    <string name="results">"Results: "</string>
+    <string name="item_added_successfully">Item added successfully !</string>
+    <string name="updated_successfully">" Updated successfully !"</string>
+    <string name="removed_successfully">" Removed successfully !"</string>
+    <string name="rating">"Rating: "</string>
+    <string name="stars">" Stars"</string>
+    <string name="talk_to_your_around_tanks_you">Talk to your arounds , tanks you !</string>
+    <string name="ok">Ok</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="permission_denied_explication_storage">\"Storage permission is required to add a photo of your item.\n\" + \"Please allow storage permissions in app settings.\"</string>
+    <string name="permission_denied_explication_camera">\"Camera permission is required to take a photo of your item.\n\" + \"Please allow camera permissions in app settings.\"</string>
+    <string name="about">About us</string>
+    <string name="uploading_item">Uploading item</string>
+
+
+    <string name="hello">Hello</string>
+    <string name="latest_gift">Latest Gift</string>
+    <string name="latest_request">Latest Request</string>
+
+
+    <string name="test_app_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="app_id" translatable="false">ca-app-pub-1483180866214481~5226872413</string>
+    <string name="bottom_banner_id" translatable="false">ca-app-pub-1483180866214481/1372479196</string>
+    <string name="be_reasonable">Please enter price (Be reasonable!)</string>
+    <string name="please_select_a_condition">Please select a condition</string>
+    <string name="please_select_a_category">Please select a category</string>
+    <string name="user_created_successfully">User Created Successfully !</string>
+    <string name="email_already_use" translatable="false">The email address is already in use by another account.</string>
+    <string name="there_is_an_account_with_that_email">There is an account with that email !</string>
+    <string name="the_email_address_is_badly_formatted" translatable="false">The email address is badly formatted.</string>
+    <string name="please_enter_a_valid_email_address">Please enter a valid email address</string>
+    <string name="connection_timeout">Connection Timeout</string>
+    <string name="wrong_password">Wrong password</string>
+    <string name="email_address_does_not_exist">Email address does not exist !</string>
+
+    <string name="items_im_giving">Items I am giving</string>
+    <string name="items_i_need">Items I need</string>
+    <string name="hey_to_mail">Hey , I\'m interested by</string>
+    <string name="send">send</string>
+    <string name="sent_rest_email">Sent reset email!</string>
+    <string name="food">Food</string>
+    <string name="cosmetic">Cosmetic</string>
+
+    <string name="submit">Submit</string>
+    <string name = "check_internet_connection">Please check internet connection!</string>
+
+
+    <string name="ask_an_item">Ask for an item</string>
+    <string name="give_an_item">Give an item</string>
+
+    <string name="show_given_items">Show given items</string>
+    <string name="show_needed_items">Show needed items</string>
 </resources>

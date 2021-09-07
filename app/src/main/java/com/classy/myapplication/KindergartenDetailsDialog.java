@@ -13,10 +13,19 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 
+
+import org.bson.Document;
+
+import io.realm.mongodb.RealmResultTask;
+import io.realm.mongodb.User;
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.MongoDatabase;
+import io.realm.mongodb.mongo.iterable.MongoCursor;
 public class KindergartenDetailsDialog extends Dialog {
 
     public static final String TAG = "pttt";
-    String Appid= "surfapp-gwucv";
+
     private MaterialButton addToFavorite;
     private MaterialButton deleteFromFavorite;
     private Context context;
@@ -26,6 +35,10 @@ public class KindergartenDetailsDialog extends Dialog {
     private ImageView photo;
     private ImageView exitBtn;
     private Kindergarten kindergarten;
+    MongoCollection<Document> mongoCollection;
+    MongoDatabase mongoDatabase;
+    MongoClient mongoClient;
+    User user1;
 
     public KindergartenDetailsDialog(@NonNull Context context) {
         super(context);
@@ -42,8 +55,13 @@ public class KindergartenDetailsDialog extends Dialog {
         Log.d(TAG, "onCreate: new Place details dialog dialog");
         setContentView(R.layout.dialog_kindergarten_details);
 
+        user1= MyApp.app.currentUser();
+        mongoClient = user1.getMongoClient("mongodb-atlas");
+        mongoDatabase = mongoClient.getDatabase("SurfData");
+        mongoCollection = mongoDatabase.getCollection("FavoriteBeachData");
 
         initViews();
+        isBeachAlreadyExistInFavorites();
         displayPlaceDetails();
 
     }
@@ -82,6 +100,8 @@ public class KindergartenDetailsDialog extends Dialog {
         rating = findViewById(R.id.placeDialog_LBL_placeRating);
         photo = findViewById(R.id.placeDialog_IMG_placeImage);
         exitBtn = findViewById(R.id.placeDialog_BTN_exitButton);
+        addToFavorite=findViewById(R.id.placeDialog_BTN_addToFavorite);
+        deleteFromFavorite=findViewById(R.id.placeDialog_BTN_deleteFromFavorite);
 
 
 
@@ -93,6 +113,97 @@ public class KindergartenDetailsDialog extends Dialog {
                 dismiss();
             }
         });
+        addToFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                addToListOfUser();
+                dismiss();
+
+            }
+        });
+
+        deleteFromFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBeachFromListOfUser();
+                dismiss();
+
+
+            }
+        });
+
+
+    }
+
+    private void addToListOfUser() {
+        mongoCollection.insertOne(new Document("userid", user1.getId()).append("name:",kindergarten.name).append("rating:",kindergarten.rat)
+                .append("Photo ref",kindergarten.photoRef))
+                .getAsync(result ->{
+                    if (result.isSuccess()){
+                        Log.d(TAG, "Data Success ");
+                    }
+                    else{
+                        Log.d(TAG, "Data Failed ");
+                    }
+                });
+
+
+    }
+
+
+
+
+    private void isBeachAlreadyExistInFavorites() {
+        Document query= new Document().append("userid", user1.getId());
+        RealmResultTask<MongoCursor<Document>> findTask=mongoCollection.find(query).iterator();
+        final String[] data = new String[1];
+        data[0]="";
+
+        findTask.getAsync(task->{
+            if(task.isSuccess()){
+                MongoCursor<Document> results=task.get();
+                Boolean flag=false;
+                while (results.hasNext()){
+                    Document currentDocument =results.next();
+                    if (currentDocument.getString("name:").equals(kindergarten.name))
+                    {
+                        flag=true;
+                    }
+
+                }
+                if(flag){
+                    deleteFromFavorite.setVisibility(View.VISIBLE);
+                    addToFavorite.setVisibility(View.GONE);
+                }
+                else {
+                    deleteFromFavorite.setVisibility(View.GONE);
+                    addToFavorite.setVisibility(View.VISIBLE);
+
+                }
+
+            }
+            else{
+                Log.d(TAG, "Task eror");
+            }
+        });
+
+
+
+
+    }
+
+
+    private void deleteBeachFromListOfUser() {
+        mongoCollection.deleteOne(new Document("userid", user1.getId()).append("name:",kindergarten.name))
+                .getAsync(result ->{
+                    if (result.isSuccess()){
+                        Log.d(TAG, "Data Success ");
+                    }
+                    else{
+                        Log.d(TAG, "Data Failed ");
+                    }
+                });
     }
 
 

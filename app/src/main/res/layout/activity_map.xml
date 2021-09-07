@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/background"
     android:orientation="vertical"
     android:layout_centerHorizontal="true"
-    tools:context=".Activity.MainActivity"
+    tools:context=".MainActivity"
     >
 
     <TextView
@@ -17,13 +17,14 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textColor="@color/error_color_material_light"
+        android:textColor="#2196F3"
         android:fontFamily="casual"
-        android:text="Nearby BEACHES"
-        android:textSize="30sp"
+        android:text="Nearby Kindergartens"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <FrameLayout
+
         android:layout_gravity="center"
         android:id="@+id/main_LAY_map"
         android:layout_width="366dp"

@@ -2,6 +2,7 @@ package com.classy.myapplication;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 
@@ -13,6 +14,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.GridLayout;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -28,16 +31,19 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MAIN";
     private static Location lastLocation;
     private FusedLocationProviderClient fusedLocationClient;
+    GridLayout gridLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        gridLayout=(GridLayout)findViewById(R.id.mainGrid);
         LocationPermission.checkAndRequestLocationPermission(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        Log.d(TAG, "onCreate: ");
         getLocation();
+        Log.d(TAG, "onCreate: ");
+
 
 
     }
@@ -54,10 +60,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "///");
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
+                            lastLocation=location;
+                            setSingleEvent(gridLayout);
                             Log.d(TAG, "LOCATION onSuccess: ");
-                            Intent intent = new Intent(MainActivity.this, DisplayNearbyKindergarten.class);
-                            intent.putExtra("EXTRA_LOCATION",location);
-                            startActivity(intent);
+
+
                         }
                         else {
                             LocationPermission.checkAndRequestLocationPermission(MainActivity.this);
@@ -80,6 +87,40 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    private void setSingleEvent(GridLayout gridLayout) {
+
+
+        CardView cardView=(CardView)gridLayout.getChildAt(2);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, DisplayNearbyKindergarten.class);
+                intent.putExtra("EXTRA_LOCATION",lastLocation);
+                startActivity(intent);
+            }
+        });
+        CardView cardViewProduct=(CardView)gridLayout.getChildAt(1);
+        cardViewProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        CardView cardViewWeather=(CardView)gridLayout.getChildAt(0);
+        cardViewWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+
+
+
+
+
+    }
 
 
 

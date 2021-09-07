@@ -1,9 +1,12 @@
 package com.classy.myapplication;
 
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class Kindergarten {
+public class Kindergarten extends RealmObject {
 
+    @PrimaryKey
     public String name;
     public String photoRef;
     public String rat;
