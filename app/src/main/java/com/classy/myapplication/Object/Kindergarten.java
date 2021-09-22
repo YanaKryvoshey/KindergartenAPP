@@ -1,8 +1,9 @@
-package com.classy.myapplication;
+package com.classy.myapplication.Object;
 
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+
 
 public class Kindergarten extends RealmObject {
 
@@ -12,6 +13,7 @@ public class Kindergarten extends RealmObject {
     public String rat;
     public Double lat;
     public Double lng;
+
 
     public Kindergarten(String name, String photoRef, String rat, Double lat, Double lng) {
         this.name = name;

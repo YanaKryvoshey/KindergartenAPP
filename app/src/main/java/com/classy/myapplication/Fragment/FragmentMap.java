@@ -1,4 +1,4 @@
-package com.classy.myapplication;
+package com.classy.myapplication.Fragment;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.view.WindowManager;
 
 import androidx.fragment.app.Fragment;
 
+import com.classy.myapplication.Object.Kindergarten;
+import com.classy.myapplication.Dialog.KindergartenDetailsDialog;
+import com.classy.myapplication.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

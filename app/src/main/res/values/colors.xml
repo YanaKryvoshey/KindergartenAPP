@@ -65,7 +65,7 @@
     <color name="design_default_color_on_primary">#ffffff</color>
     <color name="design_default_color_on_secondary">#000000</color>
     <color name="design_default_color_on_surface">#000000</color>
-    <color name="design_default_color_primary">#6200ee</color>
+    <color name="design_default_color_primary">#3F51B5</color>
     <color name="design_default_color_primary_dark">#3700b3</color>
     <color name="design_default_color_primary_variant">#3700b3</color>
     <color name="design_default_color_secondary">#03dac6</color>
@@ -120,7 +120,7 @@
     <color name="primary_text_disabled_material_dark">#4dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
     <color name="purple_200">#ffbb86fc</color>
-    <color name="purple_500">#ff6200ee</color>
+
     <color name="colorPrimary">#9C27B0</color>
     <color name="colorPrimaryDark">#7B1FA2</color>
     <color name="colorAccent">#03A9F4</color>

@@ -118,7 +118,7 @@
     <string name="cosmetic">Cosmetic</string>
 
     <string name="submit">Submit</string>
-    <string name = "check_internet_connection">Please check internet connection!</string>
+    <string name="check_internet_connection">Please check internet connection!</string>
 
 
     <string name="ask_an_item">Ask for an item</string>

@@ -1,28 +1,23 @@
-package com.classy.myapplication;
+package com.classy.myapplication.Activity;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 
-
-import android.Manifest;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 
+import com.classy.myapplication.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.main.mylibr.CalendarPermission;
 import com.main.mylibr.LocationPermission;
-import com.main.mylibr.PhonePermission;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -103,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         cardViewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -110,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
         cardViewWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, KindergartenProfile.class);
+                startActivity(intent);
 
             }
         });

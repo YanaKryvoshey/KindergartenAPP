@@ -40,6 +40,21 @@
             android:text="Place Rating"
             android:textSize="14sp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/placeDialog_BTN_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/placeDialog_LBL_placeRating"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="50"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text=""
+            app:cornerRadius="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
 
         <ImageView
@@ -47,12 +62,10 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/placeDialog_LBL_placeRating"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="57dp"
             android:layout_weight="50"
             android:gravity="center" />
-
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/placeDialog_BTN_addToFavorite"
@@ -85,6 +98,7 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             app:cornerRadius="20dp" />
+
 
     </RelativeLayout>
 

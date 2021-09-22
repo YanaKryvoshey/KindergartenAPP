@@ -1,11 +1,14 @@
-package com.classy.myapplication;
+package com.classy.myapplication.Activity;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.classy.myapplication.Fragment.FragmentMap;
+import com.classy.myapplication.Object.Kindergarten;
+import com.classy.myapplication.R;
 
 import java.util.ArrayList;
 

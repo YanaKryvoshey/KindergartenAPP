@@ -1,4 +1,4 @@
-package com.classy.myapplication;
+package com.classy.myapplication.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.classy.myapplication.Object.Kindergarten;
+import com.classy.myapplication.MyApp;
+import com.classy.myapplication.R;
 import com.google.android.material.button.MaterialButton;
 
 

@@ -1,4 +1,4 @@
-package com.classy.myapplication;
+package com.classy.myapplication.Activity;
 
 import android.content.Intent;
 import android.location.Location;
@@ -9,6 +9,10 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.classy.myapplication.Fragment.FragmentMap;
+import com.classy.myapplication.Object.Kindergarten;
+import com.classy.myapplication.R;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
