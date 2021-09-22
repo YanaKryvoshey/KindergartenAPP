@@ -45,6 +45,7 @@ public class FragmentMap extends Fragment {
     public FragmentMap() {
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("pttt", "onCreateView - Fragment_List");

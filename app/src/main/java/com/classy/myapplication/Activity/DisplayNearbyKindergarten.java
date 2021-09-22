@@ -54,6 +54,8 @@ public class DisplayNearbyKindergarten extends AppCompatActivity {
 
 
 
+    //In this function we use GOOGLE location services using API. The function accepts the user's current location.
+    //This function shows on the map the kindergartens that are nearby.
     private void openHttpRequestForPlaces(double lat, double lng) {
 
         Log.d(TAG, "openHttpRequestForPlaces: Searching for places around" +
@@ -152,54 +154,6 @@ public class DisplayNearbyKindergarten extends AppCompatActivity {
                 }
             }
         });
-    }
-    public double CalculationByDistance(Double lat1,Double lng1) {
-        try {
-
-
-            int Radius = 6371;// radius of earth in Km
-            double dLat = Math.toRadians(lastLocation.getLatitude() - lat1);
-            double dLon = Math.toRadians(lastLocation.getLongitude() - lng1);
-            Log.d(TAG, "CalculationByDistance: " + dLat + " , " + dLon);
-            double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                    + Math.cos(Math.toRadians(lat1))
-                    * Math.cos(Math.toRadians(lastLocation.getLongitude())) * Math.sin(dLon / 2)
-                    * Math.sin(dLon / 2);
-            Log.d(TAG, "CalculationByDistance: " + a);
-            double c = 2 * Math.asin(Math.sqrt(a));
-            double valueResult = Radius * c;
-            double km = valueResult / 1;
-            DecimalFormat newFormat = new DecimalFormat("####");
-            int kmInDec = Integer.valueOf(newFormat.format(km));
-            double meter = valueResult % 1000;
-            int meterInDec = Integer.valueOf(newFormat.format(meter));
-            Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                    + " Meter   " + meterInDec);
-            Double  x=Radius*c;
-            x =(Double) Math.floor(x * 100) / 100;
-            return x;
-        }catch (NumberFormatException e){
-            return 0.0;
-
-        }
-
-    }
-
-
-    public String isOpenNow(Boolean isOpen){
-        String result="";
-        if(isOpen.booleanValue()==true){
-            result="Open now!";
-        }
-        else
-        {
-            result="Closed!";
-
-        }
-        return result;
-
-
-
     }
 
 

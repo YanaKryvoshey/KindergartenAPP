@@ -84,6 +84,9 @@ public class KindergartenDetailsDialog extends Dialog {
         }
 
     }
+
+    //In this function I use the GOOGLE API and locate an image of a specific gene. I will note that most genes do not have a picture.
+    //For genes that have an image, I display it when the dialog opens.
     private void getPlacePhoto() {
         Log.d(TAG, "getPlacePhoto: fetching place image");
 
@@ -138,6 +141,8 @@ public class KindergartenDetailsDialog extends Dialog {
 
 
     }
+     //  We have added a feature that allows the user to add a garden to his list of favorites.
+    // We use a MongoDB database to store each user's garden list.
 
     private void addToListOfUser() {
         mongoCollection.insertOne(new Document("userid", user1.getId()).append("name:",kindergarten.name).append("rating:",kindergarten.rat)
@@ -156,6 +161,7 @@ public class KindergartenDetailsDialog extends Dialog {
 
 
 
+    //This function checks whether the gene already exists in the user's favorites list
 
     private void isBeachAlreadyExistInFavorites() {
         Document query= new Document().append("userid", user1.getId());
@@ -197,6 +203,7 @@ public class KindergartenDetailsDialog extends Dialog {
     }
 
 
+    //The user can remove a garden from the favorites list.
     private void deleteBeachFromListOfUser() {
         mongoCollection.deleteOne(new Document("userid", user1.getId()).append("name:",kindergarten.name))
                 .getAsync(result ->{
