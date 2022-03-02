@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.classy.myapplication.Fragment.LogInFragment;
 import com.classy.myapplication.Interface.NewAccountDialogListener;
 import com.classy.myapplication.Object.ParentUser;
 import com.classy.myapplication.R;

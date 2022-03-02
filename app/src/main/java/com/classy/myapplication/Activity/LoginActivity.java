@@ -2,6 +2,7 @@ package com.classy.myapplication.Activity;
 
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -39,95 +40,15 @@ public class LoginActivity extends AppCompatActivity implements NewAccountDialog
 
 
     String TAG="Pttt";
-
-
-
-
-    MongoCollection<Document> mongoCollection;
     MongoDatabase mongoDatabase;
     MongoClient mongoClient;
-    String email,password,name;
 
-    private EditText login_EDT_mail;
-    private EditText login_EDT_password;
-    private TextView login_LBL_forgot;
-    private MaterialButton login_BTN_login;
-    private TextView login_LBL_createCount;
-
-
-
-
-
-
-
-    User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        findViews();
-
-
-
-
-
-
-        login_BTN_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login_BTN_login.setClickable(false);
-                email = login_EDT_mail.getText().toString();
-                password = login_EDT_password.getText().toString();
-                login();
-            }
-        });
-
-
-        login_LBL_createCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialog();
-            }
-
-        });
     }
-
-
-
-
-
-
-    private void openDialog() {
-        NewAccountDialog newAccountDialog = new NewAccountDialog(LoginActivity.this);
-        newAccountDialog.show();
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.8);
-        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
-        newAccountDialog.getWindow().setLayout(width, height);
-        newAccountDialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
-        newAccountDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        newAccountDialog.getWindow().setDimAmount(1f);
-    }
-
-
-    public void login(){
-        Credentials emailPasswordCredentials = Credentials.emailPassword(email,password);
-        AtomicReference<User> user = new AtomicReference<User>();
-        MyApp.app.loginAsync(emailPasswordCredentials, it -> {
-            if (it.isSuccess()) {
-                Log.v("AUTH", "Successfully authenticated using an email and password.");
-                user.set(MyApp.app.currentUser());
-                Intent i= new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
-
-            } else {
-                Log.e("AUTH", it.getError().toString());
-            }
-        });
-
-
-    }
-
 
     @Override
     public void getInfoUser(ParentUser parentUser) {
@@ -173,53 +94,6 @@ public class LoginActivity extends AppCompatActivity implements NewAccountDialog
         });
     }
 
-
-    private void findViews() {
-
-
-
-        login_BTN_login = findViewById(R.id.login_BTN_login);
-        login_LBL_createCount = findViewById(R.id.login_LBL_createCount);
-        login_EDT_password = findViewById(R.id.login_EDT_password);
-        login_EDT_mail = findViewById(R.id.login_EDT_mail);
-        login_EDT_mail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                login_EDT_mail.setError(null); // disable error
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        login_EDT_password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                login_EDT_password.setError(null); // disable error
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-
-
-
-    }
 
 
     private void saveDetailsUser(ParentUser parentUser) {
