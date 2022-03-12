@@ -77,7 +77,8 @@ public class LogInFragment extends Fragment {
         login_LBL_createCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 openDialog(view.getContext());
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_logInFragment_to_searchOrConnectToGardenFragment);
 
             }
         });
@@ -91,16 +92,7 @@ public class LogInFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private void openDialog(Context context) {
-        NewAccountDialog newAccountDialog = new NewAccountDialog(context);
-        newAccountDialog.show();
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.8);
-        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
-        newAccountDialog.getWindow().setLayout(width, height);
-        newAccountDialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
-        newAccountDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        newAccountDialog.getWindow().setDimAmount(1f);
-    }
+
 
 
     public void login(View view){

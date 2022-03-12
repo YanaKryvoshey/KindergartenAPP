@@ -33,9 +33,13 @@ android {
     realm {
         syncEnabled = true
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def nav_version = "2.4.1"
     // Java language implementation
     implementation "androidx.navigation:navigation-fragment:$nav_version"

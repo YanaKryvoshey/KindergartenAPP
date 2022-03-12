@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements NewAccountDialog
     }
 
 
-
+//save new user data on mongoBD
     private void saveDetailsUser(ParentUser parentUser) {
         User user1=MyApp.app.currentUser();
         mongoClient = user1.getMongoClient("mongodb-atlas");

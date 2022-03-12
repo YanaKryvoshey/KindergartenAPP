@@ -47,7 +47,7 @@ public class DisplayNearbyKindergarten extends AppCompatActivity {
         Log.d(TAG, "onCreate: "+lastLocation.getLongitude() + " , " +lastLocation.getLatitude());
         resultList=new ArrayList<Kindergarten>();
         int radius = 1000;
-        openHttpRequestForPlaces(lastLocation.getLatitude(),lastLocation.getLongitude());
+        openHttpRequestForPlaces();
 
 
     }
@@ -56,10 +56,10 @@ public class DisplayNearbyKindergarten extends AppCompatActivity {
 
     //In this function we use GOOGLE location services using API. The function accepts the user's current location.
     //This function shows on the map the kindergartens that are nearby.
-    private void openHttpRequestForPlaces(double lat, double lng) {
+    private void openHttpRequestForPlaces() {
 
-        Log.d(TAG, "openHttpRequestForPlaces: Searching for places around" +
-                lat+" ," +lng);
+      //  Log.d(TAG, "openHttpRequestForPlaces: Searching for places around" +
+       //         lat+" ," +lng);
 
         int myRadius = 3000;
         String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
@@ -119,12 +119,6 @@ public class DisplayNearbyKindergarten extends AppCompatActivity {
                                 kindergarten.photoRef=null;
                             }
 
-
-
-
-
-//
-//
                             Log.d(TAG, "onResponse: "+kindergarten.photoRef);
                             resultList.add(kindergarten);
                         }
