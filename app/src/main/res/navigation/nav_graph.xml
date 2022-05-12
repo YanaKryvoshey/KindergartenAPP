@@ -22,7 +22,9 @@
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_fragmentMap"
-            app:destination="@id/fragmentMap" />
+            app:destination="@id/fragmentMap" >
+
+        </action>
     </fragment>
     <fragment
         android:id="@+id/fragmentMap"
@@ -36,10 +38,22 @@
         <action
             android:id="@+id/action_searchOrConnectToGardenFragment_to_uploadedIDPhotoActivity"
             app:destination="@id/uploadedIDPhotoActivity" />
+        <action
+            android:id="@+id/action_searchOrConnectToGardenFragment_to_choiceGardenNameFragment"
+            app:destination="@id/choiceGardenNameFragment" />
     </fragment>
     <activity
         android:id="@+id/uploadedIDPhotoActivity"
         android:name="com.classy.myapplication.UploadedIDPhotoActivity"
         android:label="activity_uploaded_idphoto"
         tools:layout="@layout/activity_uploaded_idphoto" />
+    <fragment
+        android:id="@+id/choiceGardenNameFragment"
+        android:name="com.classy.myapplication.Fragment.ChoiceGardenNameFragment"
+        android:label="fragment_choice_garden_name"
+        tools:layout="@layout/fragment_choice_garden_name" >
+        <action
+            android:id="@+id/action_choiceGardenNameFragment_to_uploadedIDPhotoActivity"
+            app:destination="@id/uploadedIDPhotoActivity" />
+    </fragment>
 </navigation>

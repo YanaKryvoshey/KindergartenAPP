@@ -9,6 +9,15 @@
     android:background="@drawable/background"
     tools:context=".UploadedIDPhotoActivity">
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please upload ID photo"
+        style="@style/CardView.Dark"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/ID_IMV_idimage"
         android:layout_width="300dp"

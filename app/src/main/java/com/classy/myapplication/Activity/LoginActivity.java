@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.classy.myapplication.MyApp;
 import com.classy.myapplication.Dialog.NewAccountDialog;
 import com.classy.myapplication.Interface.NewAccountDialogListener;
+import com.classy.myapplication.Object.AppUser;
 import com.classy.myapplication.Object.ParentUser;
 import com.classy.myapplication.R;
 import com.google.android.material.button.MaterialButton;
@@ -51,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements NewAccountDialog
     }
 
     @Override
-    public void getInfoUser(ParentUser parentUser) {
+    public void getInfoUser(AppUser parentUser) {
 
         String emailUser =parentUser.getEmail();
         String passUser = parentUser.getPassword();
@@ -69,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements NewAccountDialog
 
     }
 
-    private void loginUser(ParentUser parentUser) {
+    private void loginUser(AppUser parentUser) {
         Credentials emailPasswordCredentials = Credentials.emailPassword(parentUser.getEmail(),parentUser.getPassword());
         AtomicReference<User> user = new AtomicReference<User>();
         MyApp.app.loginAsync(emailPasswordCredentials, it -> {
@@ -96,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements NewAccountDialog
 
 
 //save new user data on mongoBD
-    private void saveDetailsUser(ParentUser parentUser) {
+    private void saveDetailsUser(AppUser parentUser) {
         User user1=MyApp.app.currentUser();
         mongoClient = user1.getMongoClient("mongodb-atlas");
         mongoDatabase = mongoClient.getDatabase("SurfData");

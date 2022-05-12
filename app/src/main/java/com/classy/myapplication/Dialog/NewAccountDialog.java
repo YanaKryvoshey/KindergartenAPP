@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.classy.myapplication.Fragment.LogInFragment;
 import com.classy.myapplication.Interface.NewAccountDialogListener;
+import com.classy.myapplication.Object.AppUser;
 import com.classy.myapplication.Object.ParentUser;
 import com.classy.myapplication.R;
 import com.google.android.material.button.MaterialButton;
@@ -181,7 +182,7 @@ public class NewAccountDialog extends Dialog {
         String id = newAccount_EDT_id.getEditText().getText().toString();
         String phoneNumber = newAccount_EDT_phoneNumber.getEditText().getText().toString();
 
-        ParentUser parentUser = new ParentUser(name,id,email,password,phoneNumber);
+        AppUser parentUser = new AppUser(name,id,email,password,phoneNumber);
 
 
         //Creating a new user with the extracted information
@@ -191,7 +192,7 @@ public class NewAccountDialog extends Dialog {
     /**
      * A method to callback the new user
      */
-    private void callBackNewUser(ParentUser parentUser) {
+    private void callBackNewUser(AppUser parentUser) {
         NewAccountDialogListener newUserDetailsCallback;
         try {
             newUserDetailsCallback = (NewAccountDialogListener) context;

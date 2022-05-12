@@ -28,6 +28,7 @@ import java.util.HashMap;
 public class FragmentMap extends Fragment {
     private static final String TAG = "sss";
     GoogleMap map;
+    private int passnum;
     private ArrayList<Kindergarten> kindergartens;
     private Location lastLocation;
     private static final float DEFAULT_ZOOM = 15f;
@@ -36,7 +37,7 @@ public class FragmentMap extends Fragment {
     public FragmentMap(ArrayList<Kindergarten> kindergartens) {
         Log.d(TAG, "FragmentMap: ");
         this.kindergartens = kindergartens;
-        if (kindergartens!= null) {
+        if (kindergartens != null) {
             Log.d(TAG, "/n" + kindergartens.toString());
         }
 
@@ -50,6 +51,9 @@ public class FragmentMap extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("pttt", "onCreateView - Fragment_List");
         View view = inflater.inflate(R.layout.fragment_map, container, false);
+        //if fragmentnum == 1 come from SearchOrConnectToGardenFragment
+        //if fragmentnum == 0 come from mainFragment
+        int fragmentnum = getArguments().getInt("NUMBER");
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -62,7 +66,7 @@ public class FragmentMap extends Fragment {
                     Log.d(TAG, "onMapReady: " + latLng);
                     Marker marker = map.addMarker(new MarkerOptions().position(latLng)
                             .title(kindergarten.getName())
-                            .snippet("Rating:" )
+                            .snippet("Rating:")
 
                     );
                     hashMap.put(marker, kindergarten);
@@ -73,9 +77,18 @@ public class FragmentMap extends Fragment {
                     public void onInfoWindowClick(Marker marker) {
                         Kindergarten kindergarten = hashMap.get(marker);
                         if (kindergarten != null) {
-                            KindergartenDetailsDialog kindergartenDetailsDialog = new KindergartenDetailsDialog(getContext(), kindergarten);
-                            createNewPlaceDetailsDialog(kindergartenDetailsDialog);
+                            //show gardens on map to parents
+                            if (fragmentnum == 0) {
+                                KindergartenDetailsDialog kindergartenDetailsDialog = new KindergartenDetailsDialog(getContext(), kindergarten);
+                                createNewPlaceDetailsDialog(kindergartenDetailsDialog);
+                            }
+                            //connect garden to teacher
+                            if (fragmentnum == 1) {
+
+                            }
                         }
+
+
                     }
                 });
 

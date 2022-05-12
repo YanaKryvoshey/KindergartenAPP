@@ -10,6 +10,7 @@ public class Message {
         this.date = date;
         this.message = message;
     }
+
     public Message() {
 
     }

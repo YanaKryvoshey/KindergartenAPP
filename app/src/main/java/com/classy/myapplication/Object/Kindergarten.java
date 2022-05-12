@@ -1,6 +1,8 @@
 package com.classy.myapplication.Object;
 
 
+import java.util.ArrayList;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -13,6 +15,7 @@ public class Kindergarten extends RealmObject {
     public String rat;
     public Double lat;
     public Double lng;
+    //public ArrayList<TeacherUser> teachers;
 
 
     public Kindergarten(String name, String photoRef, String rat, Double lat, Double lng) {
@@ -25,6 +28,8 @@ public class Kindergarten extends RealmObject {
 
     public Kindergarten() {
     }
+
+
 
     public String getName() {
         return name;

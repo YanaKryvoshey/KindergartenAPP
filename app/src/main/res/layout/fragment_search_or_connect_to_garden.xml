@@ -9,6 +9,7 @@
     android:background="@drawable/background"
     tools:context=".Fragment.SearchOrConnectToGardenFragment">
 
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/OR_BTN_connect"
         android:layout_width="250dp"
@@ -18,12 +19,7 @@
         android:textStyle="bold"
         app:cornerRadius="15dp"
         android:layout_margin="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_EDT_password"
-        app:layout_constraintVertical_bias="0.04" />
+        tools:ignore="MissingClass" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/OR_BTN_search"
@@ -33,12 +29,19 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_EDT_password"
-        app:layout_constraintVertical_bias="0.04" />
+        tools:ignore="MissingClass" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/OR_BTN_Teacher"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Teacher"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:cornerRadius="15dp"
+        android:layout_margin="30dp"
+        tools:ignore="MissingClass" />
+
 
 
 </LinearLayout>
