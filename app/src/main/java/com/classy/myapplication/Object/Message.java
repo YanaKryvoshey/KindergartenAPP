@@ -1,12 +1,10 @@
 package com.classy.myapplication.Object;
 
-import java.util.Date;
-
 public class Message {
-    private Date date;
+    private String date;
     private String message;
 
-    public Message(Date date, String message) {
+    public Message(String date, String message) {
         this.date = date;
         this.message = message;
     }
@@ -15,11 +13,11 @@ public class Message {
 
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

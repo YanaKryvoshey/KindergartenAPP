@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,26 +8,45 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context=".Activity.UploadedIDPhotoActivity">
-
+    tools:context=".Activity.UploadedChildrenPhotoActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please upload ID photo"
+        android:text="Please upload 3 clear pictures of your child"
         style="@style/CardView.Dark"
         android:textSize="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:orientation="horizontal"
+    android:gravity="center">
 
-    <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:id="@+id/ID_IMV_idimage"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/children_BTN_previous"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/previous"
+        android:clickable="true" />
+    <ImageSwitcher
+        android:id="@+id/children_IMV_childrenimage"
+        android:layout_width="250dp"
+        android:layout_height="300dp"
+        tools:ignore="MissingConstraints"/>
+    <ImageView
+        android:id="@+id/children_BTN_next"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/next"
+        android:clickable="true"/>
+</LinearLayout>
+
+
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/ID_BTN_uploadphoto"
+        android:id="@+id/children_BTN_uploadphoto"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:text="upload a photo"

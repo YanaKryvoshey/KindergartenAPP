@@ -1,130 +1,125 @@
 package com.classy.myapplication.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.os.Bundle;
-
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-
+import com.classy.myapplication.MessageAdapter;
+import com.classy.myapplication.Object.Message;
 import com.classy.myapplication.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.Calendar;
+
 public class ChatActivity extends AppCompatActivity {
 
-    private Button  add_room;
-    private EditText room_name;
+    private TextInputLayout chat_LBL_message;
+    private MaterialButton chat_BTM_send;
+    private DatabaseReference mDatabase;
+    ArrayList<Message> send = new ArrayList<>();
+    ArrayList<Message> myListData = new ArrayList<>();
 
-    private ListView listView;
-    private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> list_of_rooms = new ArrayList<>();
-    private String name;
-    private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
-        add_room = (Button) findViewById(R.id.btn_add_room);
-        room_name = (EditText) findViewById(R.id.room_name_edittext);
-        listView = (ListView) findViewById(R.id.listView);
-
-        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list_of_rooms);
-
-        listView.setAdapter(arrayAdapter);
-
-        request_user_name();
-
-        add_room.setOnClickListener(new View.OnClickListener() {
+        String gardenName = getIntent().getStringExtra("NAME");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        initView();
+        getChatFromFireBase(gardenName);
+        chat_BTM_send.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                Map<String,Object> map = new HashMap<String, Object>();
-                map.put(room_name.getText().toString(),"");
-                root.updateChildren(map);
-
+            public void onClick(View v) {
+                DateFormat df = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss ");
+                String date = df.format(Calendar.getInstance().getTime());
+                String message = chat_LBL_message.getEditText().getText().toString();
+                Message newmessage = new Message(date, message);
+                send = myListData;
+                send.add(newmessage);
+                SaveChatToFireBase(gardenName);
             }
         });
+        setRecyclerView();
+    }
 
-        root.addValueEventListener(new ValueEventListener() {
+    private void getChatFromFireBase(String gardenName) {
+        myListData.clear();
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://kindergartenapp-ea823-default-rtdb.firebaseio.com/").getReference("Message");
+        usersRef.child(gardenName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    for (DataSnapshot snapshot:dataSnapshot.getChildren()){
+                        Message mess = snapshot.getValue(Message.class);
+                        myListData.add(mess);
+                        Log.d("pttt", "getChatFromFireBase  - get chat"  );
 
-                Set<String> set = new HashSet<String>();
-                Iterator i = dataSnapshot.getChildren().iterator();
+                    }
+                    setRecyclerView();
 
-                while (i.hasNext()){
-                    set.add(((DataSnapshot)i.next()).getKey());
+                } catch (Exception ex) {
+                    Log.d("pttt", "getChatFromFireBase Failed to read from firebase" + ex.toString());
                 }
-
-                list_of_rooms.clear();
-                list_of_rooms.addAll(set);
-
-                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.d("pttt", "Failed to read latitude and longituds.", error.toException());
             }
         });
+    }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void SaveChatToFireBase(String gardenName) {
+
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://kindergartenapp-ea823-default-rtdb.firebaseio.com/");
+        DatabaseReference myRef = database.getReference("Message");
+        myRef.child(gardenName).setValue(send).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Intent intent = new Intent(getApplicationContext(), Chat_Room.class);
-                intent.putExtra("room_name",((TextView)view).getText().toString() );
-                intent.putExtra("user_name",name);
-                startActivity(intent);
+            public void onSuccess(Void aVoid) {
+                Log.d("Pttt", "updateFireBase onSuccess push data to fireBase");
+                getChatFromFireBase(gardenName);
             }
-        });
+        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Pttt", "updateFireBase onFailure push data to fireBase" + e.toString());
+                    }
+                });
+
 
     }
 
-    private void request_user_name() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter name:");
-
-        final EditText input_field = new EditText(this);
-
-        builder.setView(input_field);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                name = input_field.getText().toString();
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-                request_user_name();
-            }
-        });
-
-        builder.show();
+    private void initView() {
+        chat_LBL_message = findViewById(R.id.chat_LBL_message);
+        chat_BTM_send = findViewById(R.id.chat_BTM_send);
     }
 
 
+    private void setRecyclerView() {
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.chat_RCV_message);
+        MessageAdapter adapter = new MessageAdapter(myListData);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
 }

@@ -1,28 +1,21 @@
 package com.classy.myapplication.Object;
 
 public class ParentUser extends AppUser {
+    String usertype = "ParentUser";
 
-    private String gardenName;
 
 
     public ParentUser(String name, String id, String email, String password, String phoneNumber,String gardenName) {
-        super(name,id,email, password, phoneNumber);
-        this.gardenName = gardenName;
-    }
+        super(name,id,email, password, phoneNumber,gardenName);
 
-    public ParentUser(String gardenName) {
-        this.gardenName = gardenName;
     }
 
     public ParentUser() {
     }
 
-
-    public String getGardenName() {
-        return gardenName;
+    public String getUsertype() {
+        return usertype;
     }
 
-    public void setGardenName(String gardenName) {
-        this.gardenName = gardenName;
-    }
+
 }

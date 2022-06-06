@@ -7,13 +7,15 @@ public class AppUser {
     private String email;
     private String password;
     private String phoneNumber;
+    private String gardenName;
 
-    public AppUser(String name, String id, String email, String password, String phoneNumber) {
+    public AppUser(String name, String id, String email, String password, String phoneNumber,String gardenName) {
         this.name = name;
         this.id = id;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.gardenName = gardenName;
     }
 
     public AppUser() {
@@ -58,4 +60,14 @@ public class AppUser {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public String getGardenName() {
+        return gardenName;
+    }
+
+    public void setGardenName(String gardenName) {
+        this.gardenName = gardenName;
+    }
+
+
 }

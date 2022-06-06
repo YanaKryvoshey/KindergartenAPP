@@ -24,10 +24,14 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".UploadedIDPhotoActivity"></activity>
+        <activity android:name=".Activity.ChatActivity"></activity>
+        <activity android:name=".Activity.UploadedChildrenPhotoActivity" />
+        <activity android:name=".Activity.NewAccountActivity" />
+        <activity android:name=".Activity.UploadedIDPhotoActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -43,19 +47,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.MainActivity"
-            android:configChanges="orientation" />
-        <activity
-            android:name=".Activity.ChatActivity"
-            android:configChanges="orientation" />
-        <activity
-            android:name=".Activity.Chat_Room"
-            android:configChanges="orientation" />
-        <activity
             android:name=".Activity.DisplayNearbyKindergarten"
-            android:configChanges="orientation" />
-        <activity
-            android:name=".Activity.MapActivity"
             android:configChanges="orientation" />
         <activity
             android:name=".Activity.KindergartenProfile"

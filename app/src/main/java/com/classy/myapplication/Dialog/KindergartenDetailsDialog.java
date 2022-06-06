@@ -1,7 +1,9 @@
 package com.classy.myapplication.Dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,29 +13,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.classy.myapplication.Activity.ChatActivity;
 import com.classy.myapplication.Object.Kindergarten;
-import com.classy.myapplication.MyApp;
 import com.classy.myapplication.R;
 import com.google.android.material.button.MaterialButton;
 
-
 import org.bson.Document;
 
-import io.realm.mongodb.RealmResultTask;
 import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
-import io.realm.mongodb.mongo.iterable.MongoCursor;
 public class KindergartenDetailsDialog extends Dialog {
 
     public static final String TAG = "pttt";
 
-    private MaterialButton addToFavorite;
-    private MaterialButton deleteFromFavorite;
+//    private MaterialButton addToFavorite;
+//    private MaterialButton deleteFromFavorite;
     private Context context;
+    private Activity activity;
     private TextView name;
     private TextView address;
+    private MaterialButton placeDialog_BTN_chat;
     private TextView rating;
     private ImageView photo;
     private ImageView exitBtn;
@@ -47,10 +48,11 @@ public class KindergartenDetailsDialog extends Dialog {
         super(context);
     }
 
-    public KindergartenDetailsDialog(@NonNull Context context, Kindergarten kindergarten) {
+    public KindergartenDetailsDialog(Activity activity, @NonNull Context context, Kindergarten kindergarten) {
         super(context);
         this.context = context;
         this.kindergarten=kindergarten;
+        this.activity = activity;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +60,33 @@ public class KindergartenDetailsDialog extends Dialog {
         Log.d(TAG, "onCreate: new Place details dialog dialog");
         setContentView(R.layout.dialog_kindergarten_details);
 
-        user1= MyApp.app.currentUser();
-        mongoClient = user1.getMongoClient("mongodb-atlas");
-        mongoDatabase = mongoClient.getDatabase("SurfData");
-        mongoCollection = mongoDatabase.getCollection("FavoriteBeachData");
+//        user1= MyApp.app.currentUser();
+//        mongoClient = user1.getMongoClient("mongodb-atlas");
+//        mongoDatabase = mongoClient.getDatabase("SurfData");
+//        mongoCollection = mongoDatabase.getCollection("FavoriteBeachData");
 
         initViews();
-        isBeachAlreadyExistInFavorites();
+       // isBeachAlreadyExistInFavorites();
         displayPlaceDetails();
+
+        placeDialog_BTN_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openChat(activity);
+            }
+        });
+    }
+    
+    private void openChat(Activity activity){
+        Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra("NAME",kindergarten.name);
+        activity.startActivity(intent);
+
+//        dismiss();
+//        Fragment chatFragment = new ChatFragment();
+//         FragmentManager fragmentManager = ((AppCompatActivity)activity).getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.Kindergarten_dialog, chatFragment).commit();
+
 
     }
     private void displayPlaceDetails() {
@@ -105,9 +126,8 @@ public class KindergartenDetailsDialog extends Dialog {
         name = findViewById(R.id.placeDialog_LBL_placeName);
         rating = findViewById(R.id.placeDialog_LBL_placeRating);
         photo = findViewById(R.id.placeDialog_IMG_placeImage);
-        exitBtn = findViewById(R.id.placeDialog_BTN_exitButton);
-        addToFavorite=findViewById(R.id.placeDialog_BTN_addToFavorite);
-        deleteFromFavorite=findViewById(R.id.placeDialog_BTN_deleteFromFavorite);
+       placeDialog_BTN_chat=findViewById(R.id.placeDialog_BTN_chat);
+//        deleteFromFavorite=findViewById(R.id.placeDialog_BTN_deleteFromFavorite);
 
 
 
@@ -119,25 +139,25 @@ public class KindergartenDetailsDialog extends Dialog {
                 dismiss();
             }
         });
-        addToFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                addToListOfUser();
-                dismiss();
-
-            }
-        });
-
-        deleteFromFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteBeachFromListOfUser();
-                dismiss();
-
-
-            }
-        });
+//        addToFavorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                addToListOfUser();
+//                dismiss();
+//
+//            }
+//        });
+//
+//        deleteFromFavorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                deleteBeachFromListOfUser();
+//                dismiss();
+//
+//
+//            }
+//        });
 
 
     }
@@ -163,7 +183,7 @@ public class KindergartenDetailsDialog extends Dialog {
 
     //This function checks whether the gene already exists in the user's favorites list
 
-    private void isBeachAlreadyExistInFavorites() {
+   /* private void isBeachAlreadyExistInFavorites() {
         Document query= new Document().append("userid", user1.getId());
         RealmResultTask<MongoCursor<Document>> findTask=mongoCollection.find(query).iterator();
         final String[] data = new String[1];
@@ -200,7 +220,7 @@ public class KindergartenDetailsDialog extends Dialog {
 
 
 
-    }
+    }*/
 
 
     //The user can remove a garden from the favorites list.
@@ -223,3 +243,36 @@ public class KindergartenDetailsDialog extends Dialog {
 
 
 }
+/*
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/placeDialog_BTN_addToFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/placeDialog_IMG_placeImage"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="50"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="see the chat"
+            app:cornerRadius="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/placeDialog_BTN_deleteFromFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ask a question in the chat "
+            android:layout_below="@id/placeDialog_BTN_addToFavorite"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="50"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:cornerRadius="20dp" />
+* */

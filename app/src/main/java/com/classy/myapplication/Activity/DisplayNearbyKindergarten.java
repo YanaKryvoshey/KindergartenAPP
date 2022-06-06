@@ -23,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class DisplayNearbyKindergarten extends AppCompatActivity {
@@ -31,7 +30,7 @@ public class DisplayNearbyKindergarten extends AppCompatActivity {
 
 
 
-    private static final String TAG = "pttt";
+    private static final String TAG = "Pttt";
     private ListView mListView;
     private RecyclerView recyclerView;
     private ArrayList<Kindergarten> resultList=new ArrayList<Kindergarten>();
@@ -44,9 +43,8 @@ public class DisplayNearbyKindergarten extends AppCompatActivity {
         setContentView(R.layout.activity_map);
         Intent intent = getIntent();
         lastLocation=intent.getParcelableExtra("EXTRA_LOCATION");
-        Log.d(TAG, "onCreate: "+lastLocation.getLongitude() + " , " +lastLocation.getLatitude());
+       // Log.d(TAG, "onCreate: "+lastLocation.getLongitude() + " , " +lastLocation.getLatitude());
         resultList=new ArrayList<Kindergarten>();
-        int radius = 1000;
         openHttpRequestForPlaces();
 
 
@@ -122,9 +120,6 @@ public class DisplayNearbyKindergarten extends AppCompatActivity {
                             Log.d(TAG, "onResponse: "+kindergarten.photoRef);
                             resultList.add(kindergarten);
                         }
-
-
-
 
                         runOnUiThread(new Runnable() {
                             @Override

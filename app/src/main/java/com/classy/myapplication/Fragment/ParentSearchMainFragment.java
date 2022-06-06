@@ -19,11 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import com.classy.myapplication.FindKindergarten;
+import com.classy.myapplication.Activity.DisplayNearbyKindergarten;
 import com.classy.myapplication.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -32,21 +29,17 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
-
-import java.util.ArrayList;
+import com.google.android.material.card.MaterialCardView;
 
 
-public class SearchOrConnectToGardenFragment extends Fragment {
-
-    MaterialButton OR_BTN_connect;
-    MaterialButton OR_BTN_search;
-    MaterialButton OR_BTN_Teacher;
-    ArrayList<String> names;
-    FindKindergarten findKindergarten;
+public class ParentSearchMainFragment extends Fragment {
+private MaterialCardView ParentSearchMain_card_Map;
     Location lastLocation;
     FusedLocationProviderClient client;
-    public SearchOrConnectToGardenFragment() {
+
+    private FusedLocationProviderClient fusedLocationClient;
+    
+    public ParentSearchMainFragment() {
         // Required empty public constructor
     }
 
@@ -54,10 +47,9 @@ public class SearchOrConnectToGardenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_search_or_connect_to_garden, container, false);
-
-        findviews(view);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_parent_search_main, container, false);
+        findView(view);
         client = LocationServices.getFusedLocationProviderClient(getActivity());
 
 
@@ -71,65 +63,17 @@ public class SearchOrConnectToGardenFragment extends Fragment {
             // Call method
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
         }
-
-
-        OR_BTN_connect.setOnClickListener(new View.OnClickListener() {
+        ParentSearchMain_card_Map.setOnClickListener(new View.OnClickListener() {
             @Override
-            //the new User is parent that want to connect to hes garden
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("USERNUM", 1);
-                bundle.putStringArrayList("NAMES", names);
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.action_searchOrConnectToGardenFragment_to_choiceGardenNameFragment, bundle);
-            }
-        });
+                Log.d("Pttt", "onCreate: "+lastLocation.getLongitude() + " , " +lastLocation.getLatitude());
+                Intent intent = new Intent(getActivity(), DisplayNearbyKindergarten.class);
+                intent.putExtra("EXTRA_LOCATION",lastLocation);
+                startActivity(intent);
 
-        OR_BTN_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            // the new User is Parent that search garden
-            public void onClick(View v) {
-                Bundle bundle2 = new Bundle();
-                bundle2.putInt("USERNUM", 2);
-                NavController navController2 = Navigation.findNavController(view);
-                navController2.navigate(R.id.action_searchOrConnectToGardenFragment_to_uploadedIDPhotoActivity, bundle2);
-            }
-        });
-
-        OR_BTN_Teacher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            //the new User is Teacher that want to connect to hes garden
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("USERNUM", 3);
-                bundle.putStringArrayList("NAMES", names);
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.action_searchOrConnectToGardenFragment_to_choiceGardenNameFragment, bundle);
             }
         });
         return view;
-
-    }
-
-    private void findGardensName(FragmentActivity activity, Context context) {
-
-
-
-            findKindergarten = new FindKindergarten(lastLocation.getLatitude(), lastLocation.getLongitude());
-        if (findKindergarten != null){
-            names = findKindergarten.getNames();
-        }
-
-
-
-
-
-    }
-
-    private void findviews(View view) {
-        OR_BTN_connect = view.findViewById(R.id.OR_BTN_connect);
-        OR_BTN_search = view.findViewById(R.id.OR_BTN_search);
-        OR_BTN_Teacher = view.findViewById(R.id.OR_BTN_Teacher);
     }
 
     @Override
@@ -169,7 +113,7 @@ public class SearchOrConnectToGardenFragment extends Fragment {
                                 Log.d("Ptt", "getLatitude() = " + location.getLatitude());
                                 Log.d("Ptt", "getLongitude() = " + location.getLongitude());
                                 lastLocation  = location;
-                                findGardensName(getActivity(), getContext());
+
                             } else {
                                 // When location result is null
                                 // initialize location request
@@ -187,7 +131,7 @@ public class SearchOrConnectToGardenFragment extends Fragment {
                                         Log.d("Ptt", "getLatitude() = " + location1.getLatitude());
                                         Log.d("Ptt", "getLongitude() = " + location1.getLongitude());
                                         lastLocation = location1;
-                                        findGardensName(getActivity(), getContext());
+
                                     }
                                 };
 
@@ -202,4 +146,95 @@ public class SearchOrConnectToGardenFragment extends Fragment {
             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
+
+    private void findView(View view) {
+        ParentSearchMain_card_Map = view.findViewById(R.id.ParentSearchMain_card_Map);
+    }
 }
+
+/*
+<com.google.android.material.card.MaterialCardView
+            android:id="@+id/ParentSearchMain_card_Profile"
+            android:clickable="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:fontFamily="casual"
+                    android:text="Profile"
+                    android:textColor="#2196F3"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/user" />
+
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/ParentSearchMain_card_Chat"
+            android:clickable="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:fontFamily="casual"
+                    android:text="CHAT"
+                    android:textColor="#2196F3"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/chat" />
+
+
+
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+ */

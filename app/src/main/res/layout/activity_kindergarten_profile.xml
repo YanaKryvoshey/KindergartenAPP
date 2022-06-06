@@ -29,30 +29,21 @@
             android:layout_toRightOf="@+id/profile_image"
             android:fontFamily="casual"
             android:includeFontPadding="false"
-            android:text="Mor's Kindergarten"
+            android:text="Kindergarten Name"
             android:textColor="#000"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/adress_field"
+            android:id="@+id/address_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/fullname_field"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/profile_image"
             android:includeFontPadding="false"
-            android:text="David Remez 11, Tel-Aviv"
+            android:text="Kindergarten Address"
             android:textSize="14sp" />
-        <TextView
-            android:id="@+id/phone_field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/adress_field"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/profile_image"
-            android:includeFontPadding="false"
-            android:text="08-6732527"
-            android:textSize="14sp" />
+
     </RelativeLayout>
     <LinearLayout
         android:layout_height="wrap_content"
@@ -80,19 +71,19 @@
                     android:src="@drawable/child" />
 
                 <TextView
+                    android:id="@+id/profile_LBL_numOfChildren"
                     android:fontFamily="casual"
-                    android:id="@+id/numOfChildren_label"
                     android:includeFontPadding="false"
                     android:layout_centerInParent="true"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="23"
+                    android:text="0"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/payment_desc"
                     android:includeFontPadding="false"
-                    android:layout_below="@id/numOfChildren_label"
+                    android:layout_below="@id/profile_LBL_numOfChildren"
                     android:layout_centerHorizontal="true"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -122,19 +113,19 @@
                     android:src="@drawable/range_age" />
 
                 <TextView
+                    android:id="@+id/profile_LBL_AgeRange"
                     android:fontFamily="casual"
-                    android:id="@+id/AgeRange_label"
                     android:includeFontPadding="false"
                     android:layout_centerInParent="true"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="1-3"
+                    android:text="0"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/AX_desc"
                     android:includeFontPadding="false"
-                    android:layout_below="@id/AgeRange_label"
+                    android:layout_below="@id/profile_LBL_AgeRange"
                     android:layout_centerHorizontal="true"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -164,19 +155,19 @@
                     android:src="@drawable/teacher" />
 
                 <TextView
+                    android:id="@+id/profile_LBL_KindergartenTeacher"
                     android:fontFamily="casual"
-                    android:id="@+id/KindergartenTeacher_label"
                     android:includeFontPadding="false"
                     android:layout_centerInParent="true"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="3"
+                    android:text="0"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/y_desc"
                     android:includeFontPadding="false"
-                    android:layout_below="@id/KindergartenTeacher_label"
+                    android:layout_below="@id/profile_LBL_KindergartenTeacher"
                     android:layout_centerHorizontal="true"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -200,36 +191,27 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <HorizontalScrollView
-            android:id="@+id/HorizontalScrollView1"
+        <ImageView
+            android:id="@+id/iamge_profile"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginBottom="1dp"
             android:background="#FFF"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:id="@+id/imgLayout1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
+            android:scrollbars="none"/>
 
 
 
 
-        <Button
-            android:background="#fece2f"
 
-            android:fontFamily="casual"
-            android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/profile_LBL_Message"
+            android:layout_height="50dp"
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:text="Discreet chat" />
+            android:text="Message"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:textStyle="italic"/>
     </LinearLayout>
 
 </LinearLayout>

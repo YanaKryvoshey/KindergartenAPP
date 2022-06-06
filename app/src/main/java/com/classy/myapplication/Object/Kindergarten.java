@@ -1,13 +1,13 @@
 package com.classy.myapplication.Object;
 
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
-public class Kindergarten extends RealmObject {
+public class Kindergarten extends RealmObject implements Serializable {
 
     @PrimaryKey
     public String name;
@@ -15,21 +15,30 @@ public class Kindergarten extends RealmObject {
     public String rat;
     public Double lat;
     public Double lng;
+    public String address;
     //public ArrayList<TeacherUser> teachers;
 
 
-    public Kindergarten(String name, String photoRef, String rat, Double lat, Double lng) {
+    public Kindergarten(String name, String photoRef, String rat, Double lat, Double lng,String address) {
         this.name = name;
         this.photoRef = photoRef;
         this.rat = rat;
         this.lat = lat;
         this.lng = lng;
+        this.address = address;
     }
 
     public Kindergarten() {
     }
 
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getName() {
         return name;
@@ -71,12 +80,6 @@ public class Kindergarten extends RealmObject {
         this.photoRef = photoRef;
     }
 
-    @Override
-    public String toString() {
-        return "Kindergarten{" +
-                "name='" + name + '\'' +
-                ", rat='" + rat + '\'' +
-                '}';
-    }
+
 
 }

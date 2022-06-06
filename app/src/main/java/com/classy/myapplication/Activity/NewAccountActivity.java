@@ -1,9 +1,7 @@
-package com.classy.myapplication.Dialog;
+package com.classy.myapplication.Activity;
 
-
-
-import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,32 +9,37 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
-
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.classy.myapplication.Fragment.LogInFragment;
-import com.classy.myapplication.Interface.NewAccountDialogListener;
+import com.classy.myapplication.MyApp;
 import com.classy.myapplication.Object.AppUser;
 import com.classy.myapplication.Object.ParentSearchGardenUser;
 import com.classy.myapplication.Object.ParentUser;
+import com.classy.myapplication.Object.TeacherUser;
 import com.classy.myapplication.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.bson.Document;
+
+import java.util.concurrent.atomic.AtomicReference;
+
+import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.MongoDatabase;
 
 
-public class NewAccountDialog extends Dialog {
+public class NewAccountActivity extends AppCompatActivity {
+    private AppUser newUser;
     private static final String TAG = "Pttt";
     private Context context;
-    private ConstraintLayout newAccount_LAY_mainLayout;
     private TextInputLayout newAccount_EDT_name;
     private TextInputLayout newAccount_EDT_email;
     private TextInputLayout newAccount_EDT_password;
@@ -46,46 +49,44 @@ public class NewAccountDialog extends Dialog {
     private MaterialButton newAccount_EDT_submit;
 
     int userNum;
-    String gardenName;
-
-
-    public NewAccountDialog(@NonNull Context context,int user,String GardenName) {
-        super(context);
-        this.context = context;
-        this.userNum = user;
-        this.gardenName = GardenName;
-    }
-
+    String gardenName, usertype;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: New account dialog");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_new_account);
+        setContentView(R.layout.activity_new_account);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            // getting information from privies activity
+            userNum = bundle.getInt("USERNUM");
+            gardenName= bundle.getString("GARDENNAME");
+        }else {
+            Intent intent = getIntent();
+            userNum = intent.getIntExtra("USERNUM",-1);
+            if (userNum == 1 || userNum == 3){
+                gardenName = intent.getStringExtra("GARDENNAME");
+            }
 
+        }
 
         findViews();
-        newAccount_EDT_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkValidInfo();
-            }
-        });
     }
-
 
     private void findViews() {
         Log.d(TAG, "findViews new account dialog: ");
-        newAccount_LAY_mainLayout = findViewById(R.id.newAccount_LAY_mainLayout);
-        glideToBackground(newAccount_LAY_mainLayout, R.color.clear);
         newAccount_EDT_name = findViewById(R.id.newAccount_EDT_name);
         newAccount_EDT_email = findViewById(R.id.newAccount_EDT_email);
         newAccount_EDT_password = findViewById(R.id.newAccount_EDT_password);
         newAccount_EDT_id = findViewById(R.id.newAccount_EDT_id);
         newAccount_EDT_phoneNumber = findViewById(R.id.newAccount_EDT_phoneNumber);
         newAccount_EDT_submit = findViewById(R.id.newAccount_EDT_submit);
-
-       // setViewListeners();
+        newAccount_EDT_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkValidInfo();
+            }
+        });
+        setViewListeners();
     }
 
     /**
@@ -151,12 +152,12 @@ public class NewAccountDialog extends Dialog {
         Log.d(TAG, "checkValidInfo: Checking valid input");
         if (newAccount_EDT_name.getEditText().getText().toString().equals("")) {
             Log.d(TAG, "checkForValidInputs: first name invalid");
-            newAccount_EDT_name.setError(getContext().getString(R.string.enter_name_error));
+            newAccount_EDT_name.setError(getString(R.string.enter_name_error));
             return;
         }
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(newAccount_EDT_email.getEditText().getText().toString()).matches()) {
             Log.d(TAG, "checkForValidInputs: Email invalid");
-            newAccount_EDT_email.setError(getContext().getString(R.string.enter_email_error));
+            newAccount_EDT_email.setError(getString(R.string.enter_email_error));
             return;
         }
 
@@ -164,11 +165,11 @@ public class NewAccountDialog extends Dialog {
                 || newAccount_EDT_password.getEditText().getText().toString().length() < 6) {
             if (newAccount_EDT_password.getEditText().getText().toString().length() < 6) {
                 Log.d(TAG, "checkForValidInputs: short password");
-                newAccount_EDT_password.setError(getContext().getString(R.string.six_chars_password_error));
+                newAccount_EDT_password.setError(getString(R.string.six_chars_password_error));
                 return;
             } else {
                 Log.d(TAG, "checkForValidInputs: invalid password");
-                newAccount_EDT_password.setError(getContext().getString(R.string.null_password));
+                newAccount_EDT_password.setError(getString(R.string.null_password));
                 return;
             }
         }
@@ -189,38 +190,93 @@ public class NewAccountDialog extends Dialog {
         String password = newAccount_EDT_password.getEditText().getText().toString();
         String id = newAccount_EDT_id.getEditText().getText().toString();
         String phoneNumber = newAccount_EDT_phoneNumber.getEditText().getText().toString();
-        AppUser newUser = null;
-        if (userNum == 1){
-            newUser = new ParentUser(name,id,email,password,phoneNumber,gardenName);
 
+        if (userNum == 1){
+            ParentUser newUser = new ParentUser(name,id,email,password,phoneNumber,gardenName);
+            usertype = newUser.getUsertype();
+            getInfoUser(newUser);
         }else if (userNum ==2){
-            newUser = new ParentSearchGardenUser(name,id,email,password,phoneNumber,"NONE");
+            ParentSearchGardenUser newUser = new ParentSearchGardenUser(name,id,email,password,phoneNumber,"NONE");
+            usertype = newUser.getUsertype();
+            getInfoUser(newUser);
         }else if (userNum == 3){
-            newUser = new ParentUser(name,id,email,password,phoneNumber,gardenName);
+            TeacherUser newUser = new TeacherUser(name,id,email,password,phoneNumber,gardenName);
+            usertype = newUser.getUsertype();
+            getInfoUser(newUser);
         }
 
 
-
-        //Creating a new user with the extracted information
-        callBackNewUser(newUser);
     }
 
-    /**
-     * A method to callback the new user
-     */
-    private void callBackNewUser(AppUser parentUser) {
-        NewAccountDialogListener newUserDetailsCallback;
-        try {
-            newUserDetailsCallback = (NewAccountDialogListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "Must implement dialog listener");
+    public void getInfoUser(AppUser newUser) {
+        //Credentials emailPasswordCredentials = Credentials.emailPassword(emailUser,passUser);
+        MyApp.app.getEmailPassword().registerUserAsync(newUser.getEmail(),newUser.getPassword(), result -> {
+            if (result.isSuccess()) {
+                Log.d(TAG, "Sign Up Success ");
+                loginUser(newUser);
+            } else {
+                Log.d(TAG, "Sign Up Faild "+ result.getError().toString());
+            }
+        });
+
+    }
+
+    private void loginUser(AppUser newUser) {
+        Credentials emailPasswordCredentials = Credentials.emailPassword(newUser.getEmail(),newUser.getPassword());
+        AtomicReference<User> user = new AtomicReference<User>();
+
+        MyApp.app.loginAsync(emailPasswordCredentials, it -> {
+            if (it.isSuccess()) {
+                Log.d(TAG, "Successfully authenticated using an email and password.");
+                user.set(MyApp.app.currentUser());
+                saveDetailsUser(newUser);
+            } else {
+                Log.d(TAG, it.getError().toString());
+            }
+        });
+    }
+
+    //save new user data on mongoBD
+    private void saveDetailsUser(AppUser newUser) {
+
+
+        User user1= MyApp.app.currentUser();
+        MongoClient mongoClient = user1.getMongoClient("mongodb-atlas");
+        MongoDatabase mongoDatabase = mongoClient.getDatabase("AppUserData");
+        MongoCollection<Document> mongoCollection = null;
+
+        if (userNum == 1){
+            mongoCollection = mongoDatabase.getCollection("Parents");
+        }else if (userNum ==2){
+            mongoCollection = mongoDatabase.getCollection("SearchKindergarten");
+        }else if (userNum == 3){
+            mongoCollection = mongoDatabase.getCollection("Teachers");
         }
+        
+        mongoCollection.insertOne(new Document("userid", user1.getId()).append("name",newUser.getName()).append("phoneNumber",newUser.getPhoneNumber()).append("email",newUser.getEmail()).append("password",newUser.getPassword()).append("gardenName",newUser.getGardenName()).append("usertype",usertype)).getAsync(result ->{
+            if (result.isSuccess()){
+                Log.d(TAG, "Data Success");
+                logOutUser();
+            }
+            else{
+                Log.d(TAG, "Data Failed "+ result.getError().toString());
+            }
+        });
 
 
-        // Send the trip Dates and trip name to main layout
-        newUserDetailsCallback.getInfoUser(parentUser);
-        Log.d(TAG, "callBackNewUser: 444");
-        dismiss();
+    }
+
+    private void logOutUser() {
+        MyApp.app.currentUser().logOutAsync(result -> {
+            if (result.isSuccess()){
+                Log.d(TAG, "logOutUser SUCCESSES");
+                Intent intent = new Intent(NewAccountActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+            else{
+                Log.d(TAG, "logOutUser: ");
+            }
+        });
     }
 
     /**
@@ -238,5 +294,8 @@ public class NewAccountDialog extends Dialog {
             }
         });
     }
+
+
+
 
 }

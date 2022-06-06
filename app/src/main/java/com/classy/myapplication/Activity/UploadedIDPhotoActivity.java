@@ -1,7 +1,4 @@
-package com.classy.myapplication;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.utils.widget.ImageFilterView;
+package com.classy.myapplication.Activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,24 +7,33 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
+
 import com.classy.myapplication.Dialog.NewAccountDialog;
+import com.classy.myapplication.R;
 import com.google.android.material.button.MaterialButton;
 
-import static com.classy.myapplication.R.*;
+import static com.classy.myapplication.R.id;
 
 public class UploadedIDPhotoActivity extends AppCompatActivity {
     private static final int GALLERY_REQUEST_CODE = 3;
     ImageFilterView ID_IMV_idimage;
     MaterialButton ID_BTN_uploadphoto;
+    int USER;
+    String GardenName = "NONE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uploaded_idphoto);
-
+        Intent i = getIntent();
+        USER = i.getIntExtra("USERNUM",-1);
+        if (USER == 1){
+            GardenName = i.getStringExtra("GARDENNAME");
+        }
         findView();
 
         ID_BTN_uploadphoto.setOnClickListener(new View.OnClickListener() {
@@ -40,13 +46,13 @@ public class UploadedIDPhotoActivity extends AppCompatActivity {
     }
 
     private void findView() {
-        ID_IMV_idimage = findViewById(R.id.ID_IMV_idimage);
+        ID_IMV_idimage = findViewById(id.ID_IMV_idimage);
         ID_BTN_uploadphoto = findViewById(R.id.ID_BTN_uploadphoto);
     }
 
     private void pickFromGallery(){
 
-        //Create an Intent with action as ACTION_PICK
+       //Create an Intent with action as ACTION_PICK
         Intent intent=new Intent(Intent.ACTION_PICK);
         // Sets the type as image/*. This ensures only components of type image are selected
         intent.setType("image/*");
@@ -74,17 +80,36 @@ public class UploadedIDPhotoActivity extends AppCompatActivity {
 
     private void checkImage() {
         //Check if the new user have children
-        openDialog(this);
+        //openDialog(this);
+        openNewAccountActivity();
+    }
+
+    private void openNewAccountActivity() {
+        Intent myIntent = new Intent(UploadedIDPhotoActivity.this, NewAccountActivity.class);
+        myIntent.putExtra("USERNUM",USER);
+        if (USER == 1){
+            myIntent.putExtra("GARDENNAME",GardenName);
+        }
+
+        startActivity(myIntent);
+    }
+
+    private void openNewAccountFragment() {
+        //Fragment fragment = new NewAccountFragment();
+       // FragmentManager fragmentManager = getSupportFragmentManager();
+        //fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     private void openDialog(Context context) {
-        NewAccountDialog newAccountDialog = new NewAccountDialog(context);
+        NewAccountDialog newAccountDialog = new NewAccountDialog(context, USER, GardenName);
         newAccountDialog.show();
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.8);
-        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels );
+        int width = (int) (getResources().getDisplayMetrics().widthPixels );
         newAccountDialog.getWindow().setLayout(width, height);
         newAccountDialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
         newAccountDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         newAccountDialog.getWindow().setDimAmount(1f);
     }
+
+
 }
