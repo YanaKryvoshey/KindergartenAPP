@@ -40,7 +40,10 @@ public class TeacherMainFragment extends Fragment {
         FindLocation findLocation = new FindLocation(getContext(),getActivity());
         lastLocation = findLocation.getLastLocation();
         String garden = getArguments().getString("GARDEN_NAME");
-        findKindergarten = new FindKindergarten(lastLocation.getLatitude(), lastLocation.getLongitude(),garden);
+        if(lastLocation != null){
+            findKindergarten = new FindKindergarten(lastLocation.getLatitude(), lastLocation.getLongitude(),garden);
+
+        }
 //        if (findKindergarten.getKindergarten() != null){
 //            kindergarten = findKindergarten.getKindergarten();
 //        }

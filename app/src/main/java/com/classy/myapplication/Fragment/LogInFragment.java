@@ -22,6 +22,9 @@ import com.google.android.material.button.MaterialButton;
 
 import org.bson.Document;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.mongodb.Credentials;
@@ -50,6 +53,9 @@ public class LogInFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_log_in, container, false);
         findViews(view);
+
+        ConectingToSQL();
+
         //press on login -> open LogInFragment
         login_BTN_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +79,40 @@ public class LogInFragment extends Fragment {
         return view;
     }
 
+    public  void ConectingToSQL ()
+    {
+
+        connection();
+        String ip= "192.168.14.148";
+        String host = "jdbc:mysql://localhost:3306/yanadb";
+        String username = "root";
+        String password = "password";
+
+
+        try {
+            Connection  connect = (Connection) DriverManager.getConnection(host, username, password);
+            System.out.println("work");
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+    public  void connection()
+    {
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Works");
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
     public LogInFragment() {
         // Required empty public constructor

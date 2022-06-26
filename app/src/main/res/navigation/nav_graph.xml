@@ -65,6 +65,7 @@
         android:name="com.classy.myapplication.Fragment.ParentSearchMainFragment"
         android:label="fragment_parent_search_main"
         tools:layout="@layout/fragment_parent_search_main" >
+
         <action
             android:id="@+id/action_parentSearchMainFragment_to_fragmentMap"
             app:destination="@id/fragmentMap" />
@@ -75,11 +76,11 @@
         android:label="fragment_teacher_main"
         tools:layout="@layout/fragment_teacher_main" >
         <action
-            android:id="@+id/action_teacherMainFragment_to_fragmentMap"
-            app:destination="@id/fragmentMap" />
-        <action
             android:id="@+id/action_teacherMainFragment_to_upgradeTeacherFragment"
             app:destination="@id/upgradeTeacherFragment" />
+        <action
+            android:id="@+id/action_teacherMainFragment_to_kindergartenProfile"
+            app:destination="@id/kindergartenProfile" />
     </fragment>
     <fragment
         android:id="@+id/parentMainFragment"
@@ -87,8 +88,14 @@
         android:label="fragment_parent_main"
         tools:layout="@layout/fragment_parent_main" >
         <action
-            android:id="@+id/action_parentMainFragment_to_fragmentMap"
-            app:destination="@id/fragmentMap" />
+            android:id="@+id/action_parentMainFragment_to_kindergartenProfile"
+            app:destination="@id/kindergartenProfile" />
+        <action
+            android:id="@+id/action_parentMainFragment_to_chatActivity"
+            app:destination="@id/chatActivity" />
+        <action
+            android:id="@+id/action_parentMainFragment_to_uploadedChildrenPhotoActivity"
+            app:destination="@id/uploadedChildrenPhotoActivity" />
     </fragment>
     <fragment
         android:id="@+id/upgradeTeacherFragment"
@@ -99,4 +106,19 @@
             android:id="@+id/action_upgradeTeacherFragment_to_teacherMainFragment"
             app:destination="@id/teacherMainFragment" />
     </fragment>
+    <activity
+        android:id="@+id/kindergartenProfile"
+        android:name="com.classy.myapplication.Activity.KindergartenProfile"
+        android:label="activity_kindergarten_profile"
+        tools:layout="@layout/activity_kindergarten_profile" />
+    <activity
+        android:id="@+id/chatActivity"
+        android:name="com.classy.myapplication.Activity.ChatActivity"
+        android:label="activity_chat"
+        tools:layout="@layout/activity_chat" />
+    <activity
+        android:id="@+id/uploadedChildrenPhotoActivity"
+        android:name="com.classy.myapplication.Activity.UploadedChildrenPhotoActivity"
+        android:label="activity_uploaded_children_photo"
+        tools:layout="@layout/activity_uploaded_children_photo" />
 </navigation>
