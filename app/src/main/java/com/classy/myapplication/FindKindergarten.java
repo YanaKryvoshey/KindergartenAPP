@@ -39,7 +39,8 @@ public class FindKindergarten {
         String tempRadius = "&radius=" + myRadius;
         String tempType="&type=establishment";
         String tempPlaceContainBeach="&keyword=Kindergarten";
-        String apiKey = "&key=AIzaSyDBPfMDN1CGaF5OaA8O83ADn7dUsHkHB4Q";
+        //String apiKey = "&key=AIzaSyDBPfMDN1CGaF5OaA8O83ADn7dUsHkHB4Q";
+        String apiKey = "&key=AIzaSyCBZEzMSpILSCcPw3HWFSSsMViBZYOCMs0";
         String url = baseUrl + tempLocation + tempRadius  +tempType +tempPlaceContainBeach + apiKey+"&size=60";
         Log.d(TAG, "openHttpRequestForPlaces: "+url);
         openHttpRequestForPlaces(name,url);
